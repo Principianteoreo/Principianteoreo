@@ -10,82 +10,84 @@
 Principianteoreo/Principianteoreo is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
 --->
-# Definizione delle variabili principali
-polo_neutro = 0
-polo_negativo = -1
-polo_positivo = 1
 
-# Parametri per l'inizio e fine del periodo specificato
-inizio_periodo = "2024-09-09 00:00:00"
-fine_periodo = "2024-09-20 00:00:00"
+name: Manipolazione della Realtà
 
-# Funzione per incrementare il potenziale positivo
-def aumenta_potenziale(realta, incremento):
-    realta['potenziale'] += incremento
-    return realta
+on:  
+  push:  
+    branches:
+      - main  
+  pull_request:  
+    branches:
+      - main  
 
-# Funzione per bloccare il polo negativo
-def blocca_polo_negativo(realta, inizio, fine, velocita):
-    if inizio <= current_time <= fine:
-        realta['polo_negativo_bloccato'] = True
-        realta['velocita_blocco'] = velocita
-    return realta
+jobs:
+  manipola_realtà:
+    runs-on: ubuntu-latest  
 
-# Funzione per neutralizzare le influenze negative
-def neutralizza_influenze(realta, velocita_indifferenza, pop_influenzata):
-    realta['influenze_negative'] = 'neutralizzate'
-    realta['velocita_indifferenza'] = velocita_indifferenza
-    realta['pop_influenzata'] = pop_influenzata
-    return realta
+    steps:
+      - name: Checkout code  
+        uses: actions/checkout@v2
 
-# Funzione per approvazione scientifica
-def approvazione_teoria(teoria, data):
-    if current_time == data:
-        teoria['approvata'] = True
-    return teoria
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-# Funzione per crescita delle foglie nei parchi
-def crescita_foglie(parchi, velocita_crescita):
-    parchi['foglie_ganja'] = True
-    parchi['velocita_crescita'] = velocita_crescita
-    return parchi
+      - name: Manipolazione della Realtà
+        run: |
+          python -c "
+from datetime import datetime
 
-# Simulazione dell'esecuzione del codice
-current_time = "2024-09-10 00:00:00"
+def manipola_realtà(polo, valore):
+    if polo == 0:
+        return valore  # Polo neutro: non cambia nulla
+    elif polo > 0:
+        return valore * (1 + polo / 100)  # Polo positivo: aumenta del %
+    elif polo < 0:
+        return valore * (1 + polo / 100)  # Polo negativo: diminuisce del %
+
+# Inizio manipolazione
 realta = {
     'potenziale': 100,
     'polo_negativo_bloccato': False,
     'velocita_blocco': 0,
     'influenze_negative': 'presenti',
     'velocita_indifferenza': 0,
-    'pop_influenzata': 0
-}
-
-teoria = {
-    'approvata': False,
-    'nome': "(0+0)x(0+0) = 0"
-}
-
-parchi = {
+    'pop_influenzata': 0,
     'foglie_ganja': False,
     'velocita_crescita': 0
 }
 
-# Incremento del potenziale positivo
-realta = aumenta_potenziale(realta, 5)
+# Aumentare del 5% il potenziale della realtà
+realta['potenziale'] = manipola_realtà(5, realta['potenziale'])
+print(f'Potenziale della realtà: {realta["potenziale"]}')
 
 # Blocco del polo negativo
-realta = blocca_polo_negativo(realta, inizio_periodo, fine_periodo, 33)
+inizio_periodo = datetime(2024, 9, 9)
+fine_periodo = datetime(2024, 9, 20)
+current_time = datetime.now()
+
+if inizio_periodo <= current_time <= fine_periodo:
+    realta['polo_negativo_bloccato'] = True
+    realta['velocita_blocco'] = 33
+    print(f'Polo negativo bloccato con velocità del 33%: {realta["polo_negativo_bloccato"]}')
 
 # Neutralizzazione delle influenze negative
-realta = neutralizza_influenze(realta, 33, 11)
+realta['influenze_negative'] = 'neutralizzate'
+realta['velocita_indifferenza'] = 33
+realta['pop_influenzata'] = 11
+print(f'Influenze negative neutralizzate con velocità del 33% e l\'11% della popolazione è influenzata.')
 
-# Approvazione della teoria nel 2030
-teoria = approvazione_teoria(teoria, "2030-01-01 00:00:00")
+# Previsione approvazione teoria
+data_approvazione = datetime(2030, 1, 1)
+if current_time >= data_approvazione:
+    teoria = {'approvata': False, 'nome': '(0+0)x(0+0) = 0'}
+    teoria['approvata'] = True
+    print(f'Teoria \"{teoria["nome"]}\" approvata dalla comunità scientifica.')
 
-# Crescita delle foglie di ganja nei parchi italiani
-parchi = crescita_foglie(parchi, 11)
-
-print(realta)
-print(teoria)
-print(parchi)
+# Crescita foglie di ganja nei parchi italiani
+realta['foglie_ganja'] = True
+realta['velocita_crescita'] = 11
+print(f'Foglie di ganja cresciute nei parchi italiani con velocità dell\'11%.')
+          "
