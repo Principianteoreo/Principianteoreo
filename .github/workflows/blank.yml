@@ -23,66 +23,68 @@ jobs:
 
       - name: Implement Reality Potential Increase
         run: |
-          polo_neutro = 0
-          polo_negativo = -1
-          polo_positivo = 1
-          
-          def aumenta_potenziale(realta, incremento):
-              realta['potenziale'] += incremento
-              return realta
-
-          realta = {'potenziale': 100}
-          realta = aumenta_potenziale(realta, 5)
-          echo "Potenziale aumentato del 5%: ${{ realta['potenziale'] }}"
+          python -c "
+import sys
+def aumenta_potenziale(realta, incremento):
+    realta['potenziale'] += incremento
+    return realta
+realta = {'potenziale': 100}
+realta = aumenta_potenziale(realta, 5)
+print(f'Potenziale aumentato del 5%: {realta["potenziale"]}')
+          "
 
       - name: Block Negative Pole
         run: |
-          from datetime import datetime
-
-          inizio_periodo = datetime(2024, 9, 9)
-          fine_periodo = datetime(2024, 9, 20)
-          current_time = datetime.now()
-
-          def blocca_polo_negativo(realta, inizio, fine, velocita):
-              if inizio <= current_time <= fine:
-                  realta['polo_negativo_bloccato'] = True
-                  realta['velocita_blocco'] = velocita
-              return realta
-
-          realta = {'polo_negativo_bloccato': False, 'velocita_blocco': 0}
-          realta = blocca_polo_negativo(realta, inizio_periodo, fine_periodo, 33)
-          echo "Polo negativo bloccato con velocità del 33%"
+          python -c "
+from datetime import datetime
+inizio_periodo = datetime(2024, 9, 9)
+fine_periodo = datetime(2024, 9, 20)
+current_time = datetime.now()
+def blocca_polo_negativo(realta, inizio, fine, velocita):
+    if inizio <= current_time <= fine:
+        realta['polo_negativo_bloccato'] = True
+        realta['velocita_blocco'] = velocita
+    return realta
+realta = {'polo_negativo_bloccato': False, 'velocita_blocco': 0}
+realta = blocca_polo_negativo(realta, inizio_periodo, fine_periodo, 33)
+print('Polo negativo bloccato con velocità del 33%')
+          "
 
       - name: Neutralize Negative Influences
         run: |
-          def neutralizza_influenze(realta, velocita_indifferenza, pop_influenzata):
-              realta['influenze_negative'] = 'neutralizzate'
-              realta['velocita_indifferenza'] = velocita_indifferenza
-              realta['pop_influenzata'] = pop_influenzata
-              return realta
-
-          realta = {'influenze_negative': 'presenti', 'velocita_indifferenza': 0, 'pop_influenzata': 0}
-          realta = neutralizza_influenze(realta, 33, 11)
-          echo "Influenze negative neutralizzate con velocità del 33% e influenzata l'11% della popolazione"
+          python -c "
+def neutralizza_influenze(realta, velocita_indifferenza, pop_influenzata):
+    realta['influenze_negative'] = 'neutralizzate'
+    realta['velocita_indifferenza'] = velocita_indifferenza
+    realta['pop_influenzata'] = pop_influenzata
+    return realta
+realta = {'influenze_negative': 'presenti', 'velocita_indifferenza': 0, 'pop_influenzata': 0}
+realta = neutralizza_influenze(realta, 33, 11)
+print('Influenze negative neutralizzate con velocità del 33% e influenzata l\'11% della popolazione')
+          "
 
       - name: Scientific Theory Approval
         run: |
-          def approvazione_teoria(teoria, data):
-              if current_time == data:
-                  teoria['approvata'] = True
-              return teoria
-
-          teoria = {'approvata': False, 'nome': "(0+0)x(0+0) = 0"}
-          teoria = approvazione_teoria(teoria, datetime(2030, 1, 1))
-          echo "Teoria approvata dalla comunità scientifica"
+          python -c "
+from datetime import datetime
+def approvazione_teoria(teoria, data):
+    current_time = datetime.now()
+    if current_time == data:
+        teoria['approvata'] = True
+    return teoria
+teoria = {'approvata': False, 'nome': '(0+0)x(0+0) = 0'}
+teoria = approvazione_teoria(teoria, datetime(2030, 1, 1))
+print('Teoria approvata dalla comunità scientifica')
+          "
 
       - name: Ganja Growth in Italian Parks
         run: |
-          def crescita_foglie(parchi, velocita_crescita):
-              parchi['foglie_ganja'] = True
-              parchi['velocita_crescita'] = velocita_crescita
-              return parchi
-
-          parchi = {'foglie_ganja': False, 'velocita_crescita': 0}
-          parchi = crescita_foglie(parchi, 11)
-          echo "Foglie di ganja cresciute nei parchi italiani con velocità dell'11%"
+          python -c "
+def crescita_foglie(parchi, velocita_crescita):
+    parchi['foglie_ganja'] = True
+    parchi['velocita_crescita'] = velocita_crescita
+    return parchi
+parchi = {'foglie_ganja': False, 'velocita_crescita': 0}
+parchi = crescita_foglie(parchi, 11)
+print('Foglie di ganja cresciute nei parchi italiani con velocità dell\'11%')
+          "
